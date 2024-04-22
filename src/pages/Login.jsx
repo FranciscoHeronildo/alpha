@@ -25,13 +25,9 @@ const Login = () => {
         taxNumber: data.get("taxNumber"),
         password: data.get("password"),
       });
-      console.log("AQUI2", response.status === 201);
 
       if (response.status === 201) {
-        signin(
-          response.data.data.user.mail.toString(),
-          response.data.data.user.taxNumber.toString()
-        );
+        signin(response.data.data.user.taxNumber, response.data.data.token);
         toast.success(response.data.message + "!");
         navigate("/");
       }
