@@ -4,13 +4,12 @@ import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function Register() {
+const Register = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
     try {
       const respose = await api.post("/auth/register", {
         name: data.get("name"),
@@ -20,7 +19,7 @@ function Register() {
         password: data.get("password"),
       });
       navigate("/signin");
-      toast.success(respose.data.message);
+      toast.success(respose.data.message + "!");
     } catch (e) {
       console.error(e);
       toast.error("Preencha todos os campos corretamente!");
@@ -121,6 +120,6 @@ function Register() {
       </Box>
     </Container>
   );
-}
+};
 
 export default Register;

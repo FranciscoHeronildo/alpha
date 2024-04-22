@@ -11,20 +11,19 @@ import { TbAlpha } from "react-icons/tb";
 import api from "../services/api";
 import { toast } from "react-toastify";
 
-function Login() {
+const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
     try {
       const respose = await api.post("/auth/login", {
         taxNumber: data.get("taxNumber"),
         password: data.get("password"),
       });
-      toast.success(respose.data.message);
+      toast.success(respose.data.message + "!");
     } catch (e) {
       console.error(e);
-      toast.error("Dados incorretos");
+      toast.error("Dados não encontrados!");
     }
   };
 
@@ -101,6 +100,6 @@ function Login() {
       </Box>
     </Container>
   );
-}
+};
 
 export default Login;
