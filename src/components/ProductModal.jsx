@@ -1,4 +1,12 @@
-import { Modal, Box, TextField, Button, Typography } from "@mui/material";
+import {
+  Modal,
+  Box,
+  TextField,
+  Button,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ProductModal = ({
   isModalOpen,
@@ -24,9 +32,21 @@ const ProductModal = ({
           p: 4,
         }}
       >
-        <Typography variant="h5" fontWeight="bold">
-          {editingProductId ? "Editar Produto" : "Adicionar Produto"}
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 2,
+          }}
+        >
+          <Typography variant="h5" fontWeight="bold">
+            {editingProductId ? "Editar Produto" : "Adicionar Produto"}
+          </Typography>
+          <IconButton onClick={handleModalClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
         <TextField
           name="name"
           label="Nome do Produto"
