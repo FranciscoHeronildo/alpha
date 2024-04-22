@@ -1,8 +1,37 @@
-# React + Vite
+# Alpha
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Sobre
 
-Currently, two official plugins are available:
+## Ambiente de Desenvolvimento
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Clone o repositório:
+
+```bash
+$ cd ~/your/directory/
+$ git clone https://github.com/FranciscoHeronildo/alpha.git
+$ cd alpha
+```
+
+Instale as Dependências:
+
+```bash
+$ yarn install
+```
+
+Inicie a Aplicação:
+
+```bash
+$ yarn dev
+```
+
+Acesse a aplicação no navegador pela porta _5173_:
+
+```
+http://localhost:5173/
+```
+
+<br>
+
+## Ambiente de Homologação
+
+Link para acessar o [Netlify](https://netlify.app/)
