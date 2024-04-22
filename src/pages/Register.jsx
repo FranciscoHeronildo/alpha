@@ -1,7 +1,15 @@
-import { Button, Box, TextField, Typography, Container } from "@mui/material";
+import {
+  Link,
+  Button,
+  Box,
+  TextField,
+  Typography,
+  Container,
+  Grid,
+} from "@mui/material";
 import { TbAlpha } from "react-icons/tb";
-import api from "../services/api";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 import { toast } from "react-toastify";
 
 const Register = () => {
@@ -11,7 +19,7 @@ const Register = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const respose = await api.post("/auth/register", {
+      const response = await api.post("/auth/register", {
         name: data.get("name"),
         taxNumber: data.get("taxNumber"),
         mail: data.get("mail"),
@@ -19,7 +27,7 @@ const Register = () => {
         password: data.get("password"),
       });
       navigate("/signin");
-      toast.success(respose.data.message + "!");
+      toast.success(response.data.message + "!");
     } catch (e) {
       console.error(e);
       toast.error("Preencha todos os campos corretamente!");
@@ -112,10 +120,19 @@ const Register = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, fontWeight: "bold" }}
           >
-            Sign up
+            Inscrever-se
           </Button>
+          <Grid container>
+            <Grid item>
+              {" "}
+              J&aacute; tem uma conta?{" "}
+              <Link href="/signin" variant="body2">
+                {"Entre"}
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>

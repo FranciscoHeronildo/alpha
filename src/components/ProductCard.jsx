@@ -1,6 +1,5 @@
 import { Card, CardContent, Typography } from "@mui/material";
 
-// eslint-disable-next-line react/prop-types
 const ProductCard = ({ name, price }) => {
   return (
     <Card>

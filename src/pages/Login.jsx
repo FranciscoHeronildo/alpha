@@ -8,19 +8,33 @@ import {
   Container,
 } from "@mui/material";
 import { TbAlpha } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { toast } from "react-toastify";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
+  const { signin } = useAuth();
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const respose = await api.post("/auth/login", {
+      const response = await api.post("/auth/login", {
         taxNumber: data.get("taxNumber"),
         password: data.get("password"),
       });
-      toast.success(respose.data.message + "!");
+      console.log("AQUI2", response.status === 201);
+
+      if (response.status === 201) {
+        signin(
+          response.data.data.user.mail.toString(),
+          response.data.data.user.taxNumber.toString()
+        );
+        toast.success(response.data.message + "!");
+        navigate("/");
+      }
     } catch (e) {
       console.error(e);
       toast.error("Dados não encontrados!");
@@ -83,9 +97,9 @@ const Login = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, fontWeight: "bold" }}
           >
-            Sign in
+            Entrar
           </Button>
           <Grid container>
             <Grid item>
