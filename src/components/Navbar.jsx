@@ -9,17 +9,19 @@ import {
   Container,
   Avatar,
   Button,
-  Tooltip,
 } from "@mui/material";
-
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import { TbAlpha } from "react-icons/tb";
+import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
-const pages = ["Products", "Pricing"];
-const settings = ["Dashboard", "Logout"];
+const pages = ["Produtos"];
+const settings = ["Dashboard", "Sair"];
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { signout } = useAuth();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -36,6 +38,17 @@ const Navbar = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleUserMenuItem = (setting) => {
+    handleCloseUserMenu();
+    if (setting === "Dashboard") {
+      navigate("/");
+    }
+    if (setting === "Sair") {
+      signout();
+      navigate("/signin");
+    }
   };
 
   return (
@@ -113,11 +126,10 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Nome" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar />
+            </IconButton>
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -135,7 +147,10 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleUserMenuItem(setting)}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
