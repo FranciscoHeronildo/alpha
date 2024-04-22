@@ -1,41 +1,51 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext } from "react";
+import { useState, useEffect } from "react";
+import api from "../services/api";
+import { toast } from "react-toastify";
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [users, setUsers] = useState({});
 
   useEffect(() => {
-    const userToken = localStorage.getItem("token");
-    const usersStorage = localStorage.getItem("user");
+    const loadingStoreData = () => {
+      const storageUser = localStorage.getItem("user");
+      const storageToken = localStorage.getItem("token");
 
-    if (userToken && usersStorage) {
-      const hasUser = JSON.parse(usersStorage)?.filter(
-        (user) => user.mail === JSON.parse(userToken).mail
-      );
-
-      if (hasUser) setUser(hasUser[0]);
-    }
+      if (storageUser && storageToken) {
+        setUsers(storageUser);
+      }
+    };
+    loadingStoreData();
   }, []);
 
-  const signin = (taxNumber, token) => {
-    `Bearer ${token}`;
-    localStorage.setItem("token", JSON.stringify({ taxNumber, token }));
-  };
+  const signin = async (user, token) => {
+    if (!user === undefined) {
+      toast.error("Usuário não encontrado!");
+    } else {
+      setUsers(user);
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-  const signup = (taxNumber, token) => {
-    `Bearer ${token}`;
-    localStorage.setItem("token", JSON.stringify({ taxNumber, token }));
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+    }
   };
 
   const signout = () => {
-    setUser(null);
     localStorage.removeItem("token");
+    localStorage.clear();
+    setUsers(null);
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, signed: !!user, signin, signup, signout }}
+      value={{
+        users,
+        signin,
+        signout,
+        signed: !!users,
+      }}
     >
       {children}
     </AuthContext.Provider>

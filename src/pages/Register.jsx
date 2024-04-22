@@ -11,10 +11,8 @@ import { TbAlpha } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { toast } from "react-toastify";
-import useAuth from "../hooks/useAuth";
 
 const Register = () => {
-  const { signup } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -30,7 +28,6 @@ const Register = () => {
       });
 
       if (response.status === 201) {
-        signup(response.data.data.user.taxNumber, response.data.data.token);
         toast.success(response.data.message + "!");
         navigate("/signin");
       }

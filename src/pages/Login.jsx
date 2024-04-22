@@ -27,7 +27,7 @@ const Login = () => {
       });
 
       if (response.status === 201) {
-        signin(response.data.data.user.taxNumber, response.data.data.token);
+        await signin(response.data.data.user, response.data.data.token);
         toast.success(response.data.message + "!");
         navigate("/");
       }
