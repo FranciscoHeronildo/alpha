@@ -38,6 +38,6 @@ http://localhost:5173/
 
 ## Ambiente de Homologação
 
-Link para acessar o [Netlify](https://netlify.app/)
+Link para acessar o [Netlify](https://alpha-t.netlify.app/)
 
 <div align="center"><p>Copyright &copy; Francisco Heronildo</p></div>
