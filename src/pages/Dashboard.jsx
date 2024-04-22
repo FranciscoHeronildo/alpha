@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Box, Grid, Button, Modal, TextField, Typography } from "@mui/material";
+import { Box, Grid, Button } from "@mui/material";
 import Navbar from "../components/Navbar";
-import ProductModal from "../components/ProductModal";
 import ProductCard from "../components/ProductCard";
+import ProductModal from "../components/Modal/ProductModal";
 import api from "../services/api";
 import { toast } from "react-toastify";
 
@@ -55,14 +55,7 @@ const Dashboard = () => {
 
   const handleAddProductSubmit = async () => {
     try {
-      const storageToken = localStorage.getItem("token");
-      const auth = {
-        headers: {
-          Authorization: `Bearer ${storageToken}`,
-        },
-      };
-
-      await api.post("products/create-product", newProductData, auth);
+      await api.post("products/create-product", newProductData);
       setIsModalOpen(false);
       toast.success("Produto adicionado com sucesso!");
       allProducts();
@@ -101,17 +94,9 @@ const Dashboard = () => {
 
   const handleEditProductSubmit = async () => {
     try {
-      const storageToken = localStorage.getItem("token");
-      const auth = {
-        headers: {
-          Authorization: `Bearer ${storageToken}`,
-        },
-      };
-
       await api.put(
         `products/update-product/${editingProductId}`,
-        editedProductData,
-        auth
+        editedProductData
       );
       setIsModalOpen(false);
       toast.success("Produto atualizado com sucesso!");
