@@ -1,12 +1,12 @@
-import { createContext } from "react";
-import { useState, useEffect } from "react";
-import api from "../services/api";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import api from "../services/api";
 
 export const AuthContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState(null); // Inicialize com null
 
   useEffect(() => {
     const loadingStoreData = () => {
@@ -14,15 +14,17 @@ export const AuthProvider = ({ children }) => {
       const storageToken = localStorage.getItem("token");
 
       if (storageUser && storageToken) {
-        setUsers(storageUser);
+        setUsers(JSON.parse(storageUser)); // Parse JSON string to object
+        api.defaults.headers.common["Authorization"] = `Bearer ${storageToken}`;
       }
     };
     loadingStoreData();
   }, []);
 
   const signin = async (user, token) => {
-    if (!user === undefined) {
+    if (user === undefined) {
       toast.error("Usuário não encontrado!");
+      return;
     } else {
       setUsers(user);
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;

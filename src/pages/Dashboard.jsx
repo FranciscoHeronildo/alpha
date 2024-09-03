@@ -1,10 +1,10 @@
+import { Box, Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Box, Grid, Button } from "@mui/material";
+import { toast } from "react-toastify";
+import ProductModal from "../components/Modal/ProductModal";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
-import ProductModal from "../components/Modal/ProductModal";
 import api from "../services/api";
-import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
